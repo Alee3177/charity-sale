@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>2027 義賣｜銷售操作測試版</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="top">
+    <h1 data-text="pageTitle"></h1>
+    <p class="badge" data-text="badge"></p>
+  </header>
+
+  <main class="page">
+    <section class="steps" aria-labelledby="steps-title">
+      <h2 id="steps-title" data-text="stepsTitle"></h2>
+      <ol id="steps-list"></ol>
+    </section>
+    <p class="steps-compact" data-text="stepsCompact"></p>
+
+    <section class="products" id="products"></section>
+
+    <section class="pricing" aria-live="polite">
+      <div class="row">
+        <span class="label" data-text="originalLabel"></span>
+        <span class="value" id="original-value"></span>
+      </div>
+      <div class="row discount" id="discount-row">
+        <span class="label" data-text="discountLabel"></span>
+        <span class="value" id="discount-value"></span>
+      </div>
+      <ul class="offer-list" id="offer-list"></ul>
+      <p class="hint policy-note" data-text="policyNote"></p>
+      <div class="row final">
+        <span class="label" data-text="finalLabel"></span>
+        <span class="value" id="final-value"></span>
+      </div>
+      <p class="hint shipping-hint" id="shipping-hint"></p>
+    </section>
+
+    <div class="actions">
+      <button type="button" class="btn primary" id="submit-btn" data-text="submitButton"></button>
+      <button type="button" class="btn" id="clear-btn" data-text="clearButton"></button>
+    </div>
+    <p class="message" id="message" role="status"></p>
+
+    <section class="stats" aria-labelledby="stats-title">
+      <h2 id="stats-title" data-text="statsTitle"></h2>
+      <div class="stats-body" id="stats-body">
+        <dl class="stats-grid">
+          <div><dt data-text="statsOrders"></dt><dd id="stat-orders">0</dd></div>
+          <div><dt data-text="statsA"></dt><dd id="stat-A">0</dd></div>
+          <div><dt data-text="statsB"></dt><dd id="stat-B">0</dd></div>
+          <div><dt data-text="statsC"></dt><dd id="stat-C">0</dd></div>
+          <div><dt data-text="statsD"></dt><dd id="stat-D">0</dd></div>
+        </dl>
+        <button type="button" class="btn danger" id="reset-btn" data-text="resetButton"></button>
+      </div>
+    </section>
+
+    <div class="bottom-row">
+      <button type="button" class="stats-toggle" id="stats-toggle" aria-expanded="false" aria-controls="stats-body" data-text="statsExpand"></button>
+      <button type="button" class="btn info" id="info-btn"><span class="lbl-full" data-text="infoButton"></span><span class="lbl-short" data-text="infoButtonShort"></span></button>
+    </div>
+    <p class="flow-note" data-text="flowNote"></p>
+  </main>
+
+  <div class="overlay" id="info-overlay" hidden>
+    <div class="dialog" id="info-dialog" role="dialog" aria-modal="true">
+      <div class="dialog-head">
+        <div class="tabs" role="tablist">
+          <button type="button" role="tab" class="tab" id="tab-products" aria-selected="true" aria-controls="panel-products" data-text="tabProducts"></button>
+          <button type="button" role="tab" class="tab" id="tab-offers" aria-selected="false" aria-controls="panel-offers" data-text="tabOffers"></button>
+        </div>
+        <button type="button" class="btn close" id="close-btn" data-text="closeButton"></button>
+      </div>
+      <div class="dialog-body">
+        <div role="tabpanel" id="panel-products" aria-labelledby="tab-products">
+          <img id="img-products" class="master" alt="">
+          <p class="img-missing" id="missing-products" hidden></p>
+        </div>
+        <div role="tabpanel" id="panel-offers" aria-labelledby="tab-offers" hidden>
+          <img id="img-offers" class="master" alt="">
+          <p class="img-missing" id="missing-offers" hidden></p>
+          <p class="notice" data-text="offerNotice"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="ui-text.js"></script>
+  <script src="promotion-catalog.js"></script>
+  <script src="pricing-engine.js"></script>
+  <script src="stats-store.js"></script>
+  <script src="sales-ui.js"></script>
+</body>
+</html>
