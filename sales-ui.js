@@ -16,6 +16,10 @@
   var IMG_OFFERS = '韓食雙打愛心義賣菜單(0320版本母版_自改賣)_1102.png';
 
   var quantities = { A: 0, B: 0, C: 0, D: 0 };
+  // Snapshot of the quantities that were last recorded by 測試送出 (null = none).
+  // The order stays on screen after submit; this is what blocks a double record.
+  var lastRecorded = null;
+  var recordedMessageShown = false;
   var inputs = {};
   var storage = null;
   try { storage = window.localStorage; } catch (e) { storage = null; }
@@ -40,6 +44,10 @@
     var el = $('message');
     el.textContent = text;
     el.classList.toggle('warn', !!isWarn);
+  }
+
+  function quantityKey() {
+    return CODES.map(function (c) { return quantities[c]; }).join(',');
   }
 
   function clampQty(v) {
@@ -181,7 +189,13 @@
     $('final-value').textContent = formatMoney(pricing.final_total);
     renderOffers(pricing);
     renderShipping(pricing);
-    $('submit-btn').disabled = pricing.original_total === 0;
+    var alreadyRecorded = lastRecorded !== null && lastRecorded === quantityKey();
+    $('submit-btn').disabled = pricing.original_total === 0 || alreadyRecorded;
+    if (recordedMessageShown && !alreadyRecorded) {
+      // the order on screen no longer matches what was recorded: do not leave a false claim
+      setMessage('', false);
+      recordedMessageShown = false;
+    }
     renderStats();
     return pricing;
   }
@@ -192,27 +206,32 @@
       setMessage(T.msgEmpty, true);
       return;
     }
+    if (lastRecorded !== null && lastRecorded === quantityKey()) return; // already recorded: no duplicate
     store.recordOrder(pricing);
-    var n = store.getTotals().order_count;
-    quantities = { A: 0, B: 0, C: 0, D: 0 };
-    render(true);
+    lastRecorded = quantityKey();
+    render(false); // keep every quantity, price, offer and shipping hint on screen for the screenshot
+    recordedMessageShown = true;
     if (store.isPersistent()) {
-      setMessage(fill(T.msgRecorded, { n: n }), false);
+      setMessage(T.msgRecorded, false);
     } else {
-      setMessage(fill(T.msgRecorded, { n: n }) + T.msgNoStorage, true);
+      setMessage(T.msgRecorded + T.msgNoStorage, true);
     }
   }
 
   function onClear() {
     quantities = { A: 0, B: 0, C: 0, D: 0 };
+    lastRecorded = null;
     render(true);
+    recordedMessageShown = false;
     setMessage(T.msgCleared, false);
   }
 
   function onReset() {
     if (!window.confirm(T.confirmReset)) return;
     store.reset();
+    lastRecorded = null;
     render(false);
+    recordedMessageShown = false;
     setMessage(T.msgReset, false);
   }
 

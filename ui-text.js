@@ -80,7 +80,7 @@
     resetButton: '重設統計',
 
     msgEmpty: '本單沒有商品，請先輸入數量。',
-    msgRecorded: '已記錄第 {n} 筆測試紀錄，僅存在本機；這不是正式訂單，不影響庫存。',
+    msgRecorded: '✓ 已記錄本次測試資料｜請截圖給客人確認。這不是正式訂單。',
     msgCleared: '已清空本單。',
     msgReset: '已重設測試統計。',
     msgNoStorage: '此瀏覽器無法保存統計，重新整理後資料會消失。',
